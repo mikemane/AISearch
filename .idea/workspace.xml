@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1427029a-160a-49b6-b22a-dc6524c25322" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/datastructures/queue/QueueSearch.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/datastructures/test/NodeTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Search.iml" afterPath="$PROJECT_DIR$/Search.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/ActionFunction.java" afterPath="$PROJECT_DIR$/src/datastructures/ActionFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/BreadFirstSearch.java" afterPath="$PROJECT_DIR$/src/datastructures/BreadFirstSearch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/Main.java" afterPath="$PROJECT_DIR$/src/datastructures/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/Node.java" afterPath="$PROJECT_DIR$/src/datastructures/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/Problem.java" afterPath="$PROJECT_DIR$/src/datastructures/Problem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/datastructures/factory/QueueFactory.java" afterPath="$PROJECT_DIR$/src/datastructures/factory/QueueFactory.java" />
-    </list>
+    <list default="true" id="1427029a-160a-49b6-b22a-dc6524c25322" name="Default" comment="" />
     <ignored path="Search.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -179,6 +166,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="mikemane &lt;nwosuudoka@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -813,8 +805,16 @@
       <option name="presentableId" value="Default" />
       <updated>1478285230139</updated>
       <workItem from="1478285232969" duration="3213000" />
-      <workItem from="1478369871991" duration="3434000" />
+      <workItem from="1478369871991" duration="3611000" />
     </task>
+    <task id="LOCAL-00001" summary="Thisiis an initial comit to the file&#10;">
+      <created>1478380296435</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1478380296437</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -847,11 +847,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6647000" />
+    <option name="totallyTimeSpent" value="6824000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -860,7 +860,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32982457" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982457" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -890,6 +890,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Thisiis an initial comit to the file&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Thisiis an initial comit to the file&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
