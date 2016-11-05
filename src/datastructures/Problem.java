@@ -7,6 +7,11 @@ import java.util.List;
  */
 public class Problem {
     private List<Action> actionsTaken;
-    private GoalTest goalChecker;
+    private GoalTest goalTestCheck;
+    private Integer pathCost;
+    private int[] startState;
 
+    public Problem(GoalTest goalTest, int[] startState) {
+
+    }
 }

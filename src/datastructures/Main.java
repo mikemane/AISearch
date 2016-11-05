@@ -10,7 +10,7 @@ public class Main {
 
 
         Problem problem = new Problem();
-        Search breadthFirstSearch = new  BreadFirstSearch();
+//        Search breadthFirstSearch = new  BreadFirstSearch();
 
     }
 

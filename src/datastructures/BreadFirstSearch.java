@@ -13,8 +13,6 @@ public class BreadFirstSearch implements Search {
         this.problem = new Problem();
     }
 
-
-
     @Override
     public List<Action> search(Problem problem, QueuingFunction queueingFunction) {
         return null;
@@ -24,12 +22,5 @@ public class BreadFirstSearch implements Search {
     public Integer getMetric() {
         return null;
     }
-
-
-    public expand(Node node, Action action){
-
-    }
-
-
 
 }
