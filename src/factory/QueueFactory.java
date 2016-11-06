@@ -1,4 +1,4 @@
-package datastructures.factory;
+package factory;
 
 /**
  * Created by mikemane on 04/11/2016.

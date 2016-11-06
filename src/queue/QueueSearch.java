@@ -1,4 +1,4 @@
-package datastructures.queue;
+package queue;
 
 import datastructures.Node;
 

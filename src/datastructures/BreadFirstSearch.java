@@ -10,7 +10,7 @@ public class BreadFirstSearch implements Search {
     private Problem problem;
 
     public BreadFirstSearch( Problem p) {
-        this.problem = new Problem();
+//        this.problem = new Problem();
     }
 
     @Override

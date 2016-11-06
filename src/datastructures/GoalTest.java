@@ -1,10 +1,7 @@
 package datastructures;
 
 /**
- * Created by mikemane on 04/11/2016.
+ * Created by un4 on 05/11/16.
  */
-public interface GoalTest {
-
-    public boolean test();
-
+public class GoalTest {
 }
