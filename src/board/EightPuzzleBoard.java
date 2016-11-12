@@ -6,7 +6,7 @@ import datastructures.Coordinates;
 /**
  * Created by un4 on 05/11/16.
  */
-public class EightPuzzleBoard {
+public class EightPuzzleBoard implements Cloneable {
 
 
     private final int BOARD_SIZE = 3;
@@ -39,33 +39,69 @@ public class EightPuzzleBoard {
         //Moves depending on action;
         switch (action) {
             case UP:
-                moveUp();
+                moveGapUp();
                 break;
             case DOWN:
-                moveDown();
+                moveGapDown();
                 break;
             case LEFT:
-                moveLeft();
+                moveGapLeft();
                 break;
             case RIGHT:
-                moveRight();
+                moveGapRight();
                 break;
         }
     }
 
-    private void moveUp() {
+    public void moveGapUp() {
+        int gapPos = this.getEmptyPositon();
+        int x = getXPosition(gapPos);
+        int y = getYPosition(gapPos);
+        if (!(x == 0)) {
+            int valueOnTop = getValueAtPosition(x - 1, y);
+            updateValue(x, y, valueOnTop);
+            updateValue(x - 1, y, 0);
+        }
+    }
+
+
+    private void updateValue(int xPosition, int yPosition, int value) {
+        this.state[getAbsolutePosition(xPosition, yPosition)] = value;
+    }
+
+    public void moveGapRight() {
+        int gapPos = getEmptyPositon();
+        int x = getXPosition(gapPos);
+        int ypos = getYPosition(gapPos);
+        if (!(ypos == 2)) {
+            int valueOnRight = getValueAtPosition(x, ypos + 1);
+            updateValue(x, ypos, valueOnRight);
+            updateValue(x, ypos + 1, 0);
+        }
 
     }
 
-    private void moveLeft() {
+    public void moveGapLeft() {
+        int gapPos = getEmptyPositon();
+        int x = getXPosition(gapPos);
+        int ypos = getYPosition(gapPos);
+        if (!(ypos == 0)) {
+            int valueOnLeft = getValueAtPosition(x, ypos - 1);
+            updateValue(x, ypos, valueOnLeft);
+            updateValue(x, ypos - 1, 0);
+        }
 
     }
 
-    private void moveRight() {
-
-    }
-
-    private void moveDown() {
+    public void moveGapDown() {
+        int gapPos = getEmptyPositon();
+        int x = getXPosition(gapPos);
+        int y = getYPosition(gapPos);
+        if (!(x == 2)) {
+            int valueOnBottom = getValueAtPosition(x + 1, y);
+            updateValue(x, y, valueOnBottom);
+            updateValue(x + 1, y, 0);
+        }
 
     }
 
@@ -86,8 +122,8 @@ public class EightPuzzleBoard {
 
     public int getPositionOf(int value) {
         int result = -1;
-        for (int i : this.state) {
-            if (i == value)
+        for (int i = 0; i < this.state.length; i++) {
+            if (this.state[i] == value)
                 result = i;
         }
         return result;
@@ -99,9 +135,24 @@ public class EightPuzzleBoard {
      * @param direction the direction to move towards.
      * @return true if this move is legal.
      */
-    private boolean canMoveInDirection(Action direction) {
-//        if()
-        return false;
+    public boolean canMove(Action direction) {
+        boolean result = true;
+        int absPos = getPositionOf(EMPTY_POSITION);
+        switch (direction) {
+            case UP:
+                result = (getYPosition(absPos) != 0);
+                break;
+            case DOWN:
+                result = (getYPosition(absPos) != 2);
+                break;
+            case LEFT:
+                result = (getYPosition(absPos) != 0);
+                break;
+            case RIGHT:
+                result = (getXPosition(absPos) != 2);
+                break;
+        }
+        return result;
     }
 
 
@@ -134,5 +185,11 @@ public class EightPuzzleBoard {
             counter++;
         }
         return builder.toString();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        EightPuzzleBoard boardClone = (EightPuzzleBoard) super.clone();
+        return boardClone;
     }
 }

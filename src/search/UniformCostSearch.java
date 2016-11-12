@@ -1,18 +1,15 @@
-package datastructures;
+package search;
+
+import datastructures.Action;
+import datastructures.Problem;
+import datastructures.QueuingFunction;
 
 import java.util.List;
 
 /**
- * Created by mikemane on 04/11/2016.
+ * Created by udokanwosu on 12/11/2016.
  */
-public class BreadFirstSearch implements Search {
-
-    private Problem problem;
-
-    public BreadFirstSearch( Problem p) {
-//        this.problem = new Problem();
-    }
-
+public class UniformCostSearch implements Search {
     @Override
     public List<Action> search(Problem problem, QueuingFunction queueingFunction) {
         return null;
@@ -22,5 +19,4 @@ public class BreadFirstSearch implements Search {
     public Integer getMetric() {
         return null;
     }
-
 }

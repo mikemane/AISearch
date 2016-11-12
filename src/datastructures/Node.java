@@ -14,6 +14,7 @@ public class Node {
     private double hCost;
     private double fCost;
     private int[] state;
+    private Action action;
 
     public Node() {
         this.fCost = 0;
@@ -23,6 +24,13 @@ public class Node {
         this.parent = parent;
         this.state = state;
         this.fCost = 0;
+    }
+
+    public Node(Node parent, Action action, double cost, int[] state) {
+        setParent(parent);
+        setAction(action);
+        setfCost(cost);
+        setState(state);
     }
 
     public void setfCost(double fCost) {
