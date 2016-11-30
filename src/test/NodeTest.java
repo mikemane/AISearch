@@ -1,31 +1,28 @@
 package test;
 
 import datastructures.Node;
+import datastructures.State;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by mikemane on 05/11/2016.
+ * Created by un4 on 29/11/16.
  */
 public class NodeTest {
-
     @Test
-    public void checkEquality() {
-        int[] state1 = {1, 2, 3, 4, 5};
-        int[] state2 = {5, 4, 3, 2, 1};
-        Node node = new Node();
-        node.setState(state1);
+    public void equals() throws Exception {
+        State state = new State(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0});
+        State state1 = new State(new int[]{1, 2, 3, 4, 5, 6, 7, 0, 8});
 
-        Node node2 = new Node();
-        node2.setState(state1);
+        Node node = new Node(null, null, 1, state);
+        Node node1 = new Node(null, null, 1, state);
+        Node node2 = new Node(null, null, 1, state1);
+        assertEquals(node, node1);
+        assertNotEquals(node, node2);
+        assertNotEquals(node1, node2);
 
-        Node node3 = new Node();
-        node3.setState(state2);
-
-        assertEquals(node, node2);
-        assertNotEquals(node, node3);
-        assertNotEquals(node2, node3);
     }
+
 
 }

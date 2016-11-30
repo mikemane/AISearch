@@ -1,17 +1,18 @@
 package search;
 
 import datastructures.Action;
+import datastructures.Node;
 import datastructures.Problem;
-import datastructures.QueuingFunction;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by mikemane on 04/11/2016.
  */
 public interface Search {
 
-//    public List<Action> search(Problem problem, QueuingFunction queueingFunction);
-    public Integer getMetric();
+    public Optional<Node> search(Problem problem);
+    public double getMetric();
 
 }

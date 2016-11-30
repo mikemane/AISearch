@@ -7,26 +7,26 @@ import java.util.Set;
 /**
  * Created by mikemane on 04/11/2016.
  */
-public class Node {
+public class Node implements Comparable {
     private Node parent;
     private Set<Node> children;
     private double gCost;
     private double hCost;
     private double fCost;
-    private int[] state;
+    private State state;
     private Action action;
 
     public Node() {
         this.fCost = 0;
     }
 
-    public Node(Node parent, int[] state) {
+    public Node(Node parent, State state) {
         this.parent = parent;
         this.state = state;
         this.fCost = 0;
     }
 
-    public Node(Node parent, Action action, double cost, int[] state) {
+    public Node(Node parent, Action action, double cost, State state) {
         setParent(parent);
         setAction(action);
         setfCost(cost);
@@ -65,11 +65,11 @@ public class Node {
         return this.children;
     }
 
-    public int[] getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(int[] state) {
+    public void setState(State state) {
         this.state = state;
     }
 
@@ -81,9 +81,47 @@ public class Node {
         this.parent = parent;
     }
 
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        Node node = (Node) obj;
-        return Arrays.equals(this.getState(), ((Node) obj).getState());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        if (Double.compare(node.gCost, gCost) != 0) return false;
+        if (Double.compare(node.hCost, hCost) != 0) return false;
+        if (Double.compare(node.fCost, fCost) != 0) return false;
+        if (parent != null ? !parent.equals(node.parent) : node.parent != null) return false;
+        if (children != null ? !children.equals(node.children) : node.children != null) return false;
+        if (state != null ? !state.equals(node.state) : node.state != null) return false;
+        return action == node.action;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return state != null ? state.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Node node = ((Node) o);
+        if (this.getfCost() == node.getfCost())
+            return 0;
+        else if (this.getfCost() < node.getfCost())
+            return -1;
+        else
+            return 1;
     }
 }

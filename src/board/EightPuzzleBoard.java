@@ -9,8 +9,9 @@ import datastructures.Coordinates;
 public class EightPuzzleBoard implements Cloneable {
 
 
-    private final int BOARD_SIZE = 3;
-    private final int EMPTY_POSITION = 0;
+    public static final int BOARD_SIZE = 3;
+    public static final int EMPTY_POSITION = 0;
+
     private int[] state;
 
     public EightPuzzleBoard(int[] state) {
@@ -78,7 +79,6 @@ public class EightPuzzleBoard implements Cloneable {
             updateValue(x, ypos, valueOnRight);
             updateValue(x, ypos + 1, 0);
         }
-
     }
 
     public void moveGapLeft() {
@@ -155,6 +155,11 @@ public class EightPuzzleBoard implements Cloneable {
         return result;
     }
 
+    public int[] getStateFromDirection(Action direction) {
+        EightPuzzleBoard board = this.deepClone();
+        board.move(direction);
+        return board.state;
+    }
 
     private int getYPosition(int position) {
         return position % BOARD_SIZE;
@@ -192,4 +197,11 @@ public class EightPuzzleBoard implements Cloneable {
         EightPuzzleBoard boardClone = (EightPuzzleBoard) super.clone();
         return boardClone;
     }
+
+    protected EightPuzzleBoard deepClone() {
+        EightPuzzleBoard eightPuzzleBoard = new EightPuzzleBoard();
+        eightPuzzleBoard.state = this.state;
+        return eightPuzzleBoard;
+    }
+
 }

@@ -1,18 +1,20 @@
 package datastructures;
 
-import java.util.List;
+import costfunctions.CostFunction;
 
 /**
  * Created by mikemane on 04/11/2016.
  */
 public class Problem {
-    private List<Action> actionsTaken;
-    private GoalTest goalTestCheck;
+    private GoalTest goalTest;
     private Integer pathCost;
-    private int[] initialState;
+    private State initialState;
+    private CostFunction pathCostFunction;
 
-    public Problem(GoalTest goalTest, int[] initialState) {
+    public Problem(GoalTest goalTest, State initialState, CostFunction pathCostFunction) {
         this.initialState = initialState;
+        this.pathCostFunction = pathCostFunction;
+        this.goalTest = goalTest;
     }
 
     public Integer getPathCost() {
@@ -23,19 +25,20 @@ public class Problem {
         this.pathCost = pathCost;
     }
 
-    public int[] getInitialState() {
-        return initialState;
-    }
-
-    public void setInitialState(int[] initialState) {
+    public void setInitialState(State initialState) {
         this.initialState = initialState;
     }
 
-    public void setActionsTaken(List<Action> actionsTaken) {
-        this.actionsTaken = actionsTaken;
+    public State goalState() {
+        return this.goalTest.getGoalState();
     }
 
-    public List<Action> getActionsTaken() {
-        return actionsTaken;
+    public CostFunction getPathCostFunction() {
+        return pathCostFunction;
     }
+
+    public State getInitialState() {
+        return initialState;
+    }
+
 }

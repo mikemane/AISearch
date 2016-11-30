@@ -1,6 +1,8 @@
+package test;
+
 import datastructures.Action;
 import datastructures.Node;
-import datastructures.NodeExpander;
+import datastructures.ExpandNode;
 import datastructures.Problem;
 
 import java.util.HashSet;
@@ -16,15 +18,15 @@ public class GraphSearch {
     HashSet<Node> openSet;
     HashSet<Node> closedSet;
 
-    NodeExpander nodeExpander;
+    ExpandNode expandNode;
 
-    public GraphSearch(){
-        nodeExpander = new NodeExpander();
-    }
+//    public GraphSearch(){
+//        expandNode = new ExpandNode();
+//    }
 
-    public List<Action> search(Problem problem , Queue<Node> frontierNode){
+    public List<Action> search(Problem problem, Queue<Node> frontierNode) {
 //        this
-
+        return null;
     }
 
 
