@@ -20,7 +20,7 @@ public class BreadFirstSearch implements Search {
         this();
         this.problem = p;
         this.expandNode = new ExpandNode(p);
-        this.rootNode = new Node(null, null, 0, problem.getInitialState());
+        this.rootNode = new Node(null, 0, problem.getInitialState());
     }
 
     public BreadFirstSearch() {

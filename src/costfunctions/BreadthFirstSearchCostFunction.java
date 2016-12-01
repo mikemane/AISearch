@@ -5,7 +5,7 @@ import datastructures.State;
 
 /**
  * Created by un4 on 29/11/16.
- * */
+ */
 public class BreadthFirstSearchCostFunction implements CostFunction {
 
     private int cost;
@@ -15,7 +15,7 @@ public class BreadthFirstSearchCostFunction implements CostFunction {
     }
 
     @Override
-    public double calculateCost(State state, Action action, State successorState) {
+    public double calculateCost(State state, State successorState) {
         return this.cost;
     }
 }

@@ -17,7 +17,7 @@ public class AStarCostFunction implements CostFunction {
     }
 
     @Override
-    public double calculateCost(State state, Action action, State successorState) {
+    public double calculateCost(State state,  State successorState) {
         return this.heuristics.getHeuristic(state, successorState);
     }
 }

@@ -14,7 +14,7 @@ public class Node implements Comparable {
     private double hCost;
     private double fCost;
     private State state;
-    private Action action;
+//    private Action action;
 
     public Node() {
         this.fCost = 0;
@@ -23,12 +23,14 @@ public class Node implements Comparable {
     public Node(Node parent, State state) {
         this.parent = parent;
         this.state = state;
-        this.fCost = 0;
+        this.setfCost(0);
+        this.setgCost(1);
+        this.sethCost(1);
     }
 
-    public Node(Node parent, Action action, double cost, State state) {
+    public Node(Node parent,  double cost, State state) {
         setParent(parent);
-        setAction(action);
+//        setAction(action);
         setfCost(cost);
         setState(state);
     }
@@ -81,32 +83,42 @@ public class Node implements Comparable {
         this.parent = parent;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
-    }
-
-    public Action getAction() {
-        return action;
-    }
+//    public void setAction(Action action) {
+//        this.action = action;
+//    }
+//
+//    public Action getAction() {
+//        return action;
+//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        if (Double.compare(node.gCost, gCost) != 0) return false;
-        if (Double.compare(node.hCost, hCost) != 0) return false;
-        if (Double.compare(node.fCost, fCost) != 0) return false;
+//        if (Double.compare(node.gCost, gCost) != 0) return false;
+//        if (Double.compare(node.hCost, hCost) != 0) return false;
+//        if (Double.compare(node.fCost, fCost) != 0) return false;
         if (parent != null ? !parent.equals(node.parent) : node.parent != null) return false;
         if (children != null ? !children.equals(node.children) : node.children != null) return false;
-        if (state != null ? !state.equals(node.state) : node.state != null) return false;
-        return action == node.action;
+        return state != null ? state.equals(node.state) : node.state == null;
 
     }
 
     @Override
     public int hashCode() {
-        return state != null ? state.hashCode() : 0;
+        int result;
+        long temp;
+        result = parent != null ? parent.hashCode() : 0;
+        result = 31 * result + (children != null ? children.hashCode() : 0);
+        temp = Double.doubleToLongBits(gCost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(hCost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(fCost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        return result;
     }
 
     @Override

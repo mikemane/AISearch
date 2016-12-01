@@ -28,7 +28,7 @@ public class ExpandNode {
      * @return the created node.
      */
     private Node createNode(Node parent, Action action, double cost, State state) {
-        return new Node(parent, action, cost, state);
+        return new Node(parent, cost, state);
     }
 
     /**
@@ -44,7 +44,7 @@ public class ExpandNode {
                 State newState = parentNode.getState().move(direction);
                 System.out.println(newState.showMeStuff());
                 System.out.println();
-                double cost = this.problem.getPathCostFunction().calculateCost(parentNode.getState(), direction, newState);
+                double cost = parentNode.getgCost() + this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
                 Node newNode = createNode(parentNode, direction, cost, newState);
                 successors.add(newNode);
             }
