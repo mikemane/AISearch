@@ -6,11 +6,11 @@ import datastructures.State;
 /**
  * Created by un4 on 29/11/16.
  */
-public class BreadthFirstSearchCostFunction implements CostFunction {
+public class UniformCostFuncton implements CostFunction {
 
     private int cost;
 
-    public BreadthFirstSearchCostFunction() {
+    public UniformCostFuncton() {
         this.cost = 1;
     }
 

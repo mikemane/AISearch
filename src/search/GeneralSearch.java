@@ -1,10 +1,8 @@
 package search;
 
-import datastructures.ExpandNode;
-import datastructures.Node;
-import datastructures.Problem;
-import datastructures.State;
+import datastructures.*;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -14,10 +12,9 @@ import java.util.PriorityQueue;
 public abstract class GeneralSearch implements Search {
 
 
-    protected HashSet<State> openStateSet;
-    protected HashSet<State> closedStateSet;
-    protected PriorityQueue<Node> nodesQueue;
-    protected ExpandNode expandNode;
+    protected HashSet<State> openSet;
+    protected HashSet<State> closedSet;
+    protected PriorityQueue<Node> queueNode;
     protected Problem problem;
     protected Node rootNode;
     protected double metrics;
@@ -28,71 +25,46 @@ public abstract class GeneralSearch implements Search {
     }
 
     public GeneralSearch() {
-        this.openStateSet = new HashSet<>();
-        this.closedStateSet = new HashSet<>();
-        this.nodesQueue = new PriorityQueue<>();
+        this.closedSet = new HashSet<>();
+        this.openSet = new HashSet<>();
+        Comparator<Node> comparator = new NodeComparator();
+        this.queueNode = new PriorityQueue<>(11, comparator);
+        this.metrics = 0;
     }
 
     public void setProblem(Problem problem) {
         this.problem = problem;
-        this.expandNode = new ExpandNode(problem);
         this.rootNode = new Node(null, 0, this.problem.getInitialState());
     }
 
-
-//    @Override
-//    public Optional<Node> search(Problem problem) {
-//        this.setProblem(problem);
-//        clearObjects();
-//        Node currentNode = this.rootNode;
-//        this.addToSet(currentNode);
-//        while (!this.nodesQueue.isEmpty()) {
-//            Node exNode = this.removeFromSet();
-//            if (problem.goalState().equals(exNode.getState())) {
-//                //TODO some metrics here.
-//                this.metrics = exNode.getfCost();
-//                return Optional.of(exNode);
-//            }
-//            List<Node> nodes = this.expandNode.expandNode(exNode);
-//            for (Node sNode : nodes) {
-//                this.addToSet(sNode);
-//            }
-//        }
-//        return Optional.empty();
-//    }
-
-    protected Node removeFromSet() {
-        Node node = this.nodesQueue.poll();
-        this.closedStateSet.add(node.getState());
-        this.openStateSet.remove(node.getState());
-        return node;
-    }
-
-    protected void addToSet(Node node) {
-        if (!openStateSet.contains(node.getState()) && !closedStateSet.contains(node.getState())) {
-            this.openStateSet.add(node.getState());
-            this.nodesQueue.add(node);
+    protected void add(Node node) {
+        if (!contains(node)) {
+            this.queueNode.add(node);
+            this.openSet.add(node.getState());
         }
     }
 
     protected void clearObjects() {
-        this.nodesQueue.clear();
-        this.openStateSet.clear();
-        this.closedStateSet.clear();
+        this.queueNode.clear();
+        this.openSet.clear();
+        this.closedSet.clear();
     }
 
+    protected Node removeTopNode() {
+        Node node = this.queueNode.poll();
+        this.closedSet.add(node.getState());
+        this.openSet.remove(node.getState());
+        return node;
+    }
 
     @Override
     public double getMetric() {
-        return this.metrics + numOfExpansions();
+        return this.metrics;
     }
 
-    public int numOfExpansions(){
-        return this.expandNode.getNumberOfExpansions();
-    }
 
-    public boolean contains(State state){
-        return this.openStateSet.contains(state) || this.closedStateSet.contains(state);
+    public boolean contains(Node node) {
+        return this.openSet.contains(node.getState()) || this.closedSet.contains(node.getState());
     }
 
 

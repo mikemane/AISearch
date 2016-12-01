@@ -1,5 +1,6 @@
 package datastructures;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,6 @@ public class Node implements Comparable {
     private double hCost;
     private double fCost;
     private State state;
-//    private Action action;
 
     public Node() {
         this.fCost = 0;
@@ -24,13 +24,12 @@ public class Node implements Comparable {
         this.parent = parent;
         this.state = state;
         this.setfCost(0);
-        this.setgCost(1);
-        this.sethCost(1);
+        this.setgCost(0);
+        this.sethCost(0);
     }
 
     public Node(Node parent,  double cost, State state) {
         setParent(parent);
-//        setAction(action);
         setfCost(cost);
         setState(state);
     }
@@ -83,22 +82,15 @@ public class Node implements Comparable {
         this.parent = parent;
     }
 
-//    public void setAction(Action action) {
-//        this.action = action;
-//    }
-//
-//    public Action getAction() {
-//        return action;
-//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-//        if (Double.compare(node.gCost, gCost) != 0) return false;
-//        if (Double.compare(node.hCost, hCost) != 0) return false;
-//        if (Double.compare(node.fCost, fCost) != 0) return false;
+        if (Double.compare(node.gCost, gCost) != 0) return false;
+        if (Double.compare(node.hCost, hCost) != 0) return false;
+        if (Double.compare(node.fCost, fCost) != 0) return false;
         if (parent != null ? !parent.equals(node.parent) : node.parent != null) return false;
         if (children != null ? !children.equals(node.children) : node.children != null) return false;
         return state != null ? state.equals(node.state) : node.state == null;
@@ -129,11 +121,22 @@ public class Node implements Comparable {
     @Override
     public int compareTo(Object o) {
         Node node = ((Node) o);
-        if (this.getfCost() == node.getfCost())
-            return 0;
-        else if (this.getfCost() < node.getfCost())
-            return -1;
-        else
-            return 1;
+        return Double.compare(this.getfCost() , node.getfCost());
     }
+
+    public boolean isRoot(){
+        return this.parent == null;
+    }
+
+    public List<Node> getPath(){
+        List<Node> nodes = new ArrayList<>();
+        Node currentNode = this;
+        while(!currentNode.isRoot()){
+            nodes.add(0,currentNode);
+            currentNode = currentNode.parent;
+        }
+        nodes.add(0,currentNode);
+        return nodes;
+    }
+
 }

@@ -21,31 +21,41 @@ public class AStarSearch extends GeneralSearch {
 
     @Override
     public Optional<Node> search(Problem problem) {
+        this.setProblem(problem);
         this.clearObjects();
+
         this.rootNode.setgCost(0);
-        while (!this.nodesQueue.isEmpty()) {
-            Node currentNode = removeFromSet();
+        this.rootNode.sethCost(this.heuristics.getHeuristic(this.rootNode.getState(), problem.goalState()));
+        this.add(rootNode);
+
+        while (!this.queueNode.isEmpty()) {
+            Node currentNode = removeTopNode();
             if (this.problem.goalState().equals(currentNode.getState())) {
                 return Optional.of(currentNode);
             }
+
             for (Action direction : Action.values()) {
                 if (!currentNode.getState().canMove(direction))
                     continue;
                 State newState = currentNode.getState().move(direction);
-                double gCost = currentNode.getgCost() + 1;
-                double hCost = this.heuristics.getHeuristic(newState,this.problem.goalState()); //this.problem.getPathCostFunction().calculateCost(newState, problem.goalState());
+                Node node = new Node(currentNode, newState);
+                if (contains(node)) continue;
+
+                double gCost = currentNode.getgCost();
+                double hCost = this.heuristics.getHeuristic(newState, this.problem.goalState()); //this.problem.getPathCostFunction().calculateCost(newState, problem.goalState());
                 double fCost = gCost + hCost;
-                Node node = new Node(currentNode, fCost, newState);
 
-                this.addToSet(node);
+                node.setfCost(fCost);
+                node.setgCost(gCost);
+                node.sethCost(hCost);
 
-//                if (this.openStateSet.contains(newState))
-//                    addToSet(node);
-//                else if ()
-//                    continue;J
+                this.add(node);
+                this.metrics++;
             }
         }
         return Optional.empty();
     }
+
+
 
 }

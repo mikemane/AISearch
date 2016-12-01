@@ -22,12 +22,11 @@ public class ExpandNode {
      * Creates a node with the relevant values.
      *
      * @param parent this is the parent node.
-     * @param action this is the action that was performed on this node.
      * @param cost   this is the cost that is associated with this node.
      * @param state  this is the current state of the board.
      * @return the created node.
      */
-    private Node createNode(Node parent, Action action, double cost, State state) {
+    private Node createNode(Node parent,  double cost, State state) {
         return new Node(parent, cost, state);
     }
 
@@ -42,14 +41,11 @@ public class ExpandNode {
         for (Action direction : Action.values()) {
             if (parentNode.getState().canMove(direction)) {
                 State newState = parentNode.getState().move(direction);
-                System.out.println(newState.showMeStuff());
-                System.out.println();
-                double cost = parentNode.getgCost() + this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
-                Node newNode = createNode(parentNode, direction, cost, newState);
+                double cost = this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
+                Node newNode = createNode(parentNode,  cost, newState);
                 successors.add(newNode);
             }
         }
-        System.out.println("\n\n ----------- -------------------- ---- \n\n");
         numberOfExpansions++;
         return successors;
     }

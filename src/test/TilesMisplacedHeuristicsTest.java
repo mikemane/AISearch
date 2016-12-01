@@ -18,14 +18,14 @@ public class TilesMisplacedHeuristicsTest {
      */
     @Test
     public void getHeuristic() throws Exception {
-        int[] values = new int[]{1, 2, 3, 4, 5, 6, 7, 0, 8};
+        int[] values = new int[]{1, 3, 2, 4, 5, 6, 7, 0, 8};
         int[] goalState = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0};
         State state = new State(values);
         State goal = new State(goalState);
 
         Heuristics tl = new TilesMisplacedHeuristics();
         int mis = (int) tl.getHeuristic(state, goal);
-        assertEquals(2, mis);
+        assertEquals(4, mis);
     }
 
 }

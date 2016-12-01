@@ -1,12 +1,12 @@
 package main;
 
-import costfunctions.AStarCostFunction;
-import costfunctions.BreadthFirstSearchCostFunction;
+import costfunctions.BFSCostFunction;
+import costfunctions.UniformCostFuncton;
 import datastructures.*;
 import heuristics.ManhattanDistanceHeuristics;
+import heuristics.TilesMisplacedHeuristics;
 import search.AStarSearch;
 import search.BreadFirstSearch;
-import search.GeneralSearch;
 import search.Search;
 
 import java.util.Optional;
@@ -24,21 +24,28 @@ public class Main {
         State puzzleState = new State(puzzle);
 
         GoalTest goalTest = new GoalTest(new State(goal));
-        Problem problem = new Problem(goalTest, puzzleState, new BreadthFirstSearchCostFunction());
+        Problem problem = new Problem(goalTest, puzzleState, new BFSCostFunction());
         Search bfs = new BreadFirstSearch();
         Optional<Node> result = bfs.search(problem);
         result.ifPresent(x -> System.out.println(x.getState()));
         System.out.println(bfs.getMetric());
 
 
-        System.out.println("\n\n A STAR \n\n");
-
-//        AStarCostFunction aStarCostFunction = new AStarCostFunction(new ());
-        Problem problem1 = new Problem(goalTest , puzzleState, new BreadthFirstSearchCostFunction());
+        System.out.println("\n\n A STAR Manhatten Distance");
+        Problem problem1 = new Problem(goalTest, puzzleState, new UniformCostFuncton());
         Search aStarSearch = new AStarSearch(new ManhattanDistanceHeuristics());
         Optional<Node> result1 = aStarSearch.search(problem1);
-        result.ifPresent( r -> System.out.println(r.getState()));
+        result1.ifPresent(r -> System.out.println(r.getState()));
         System.out.println(aStarSearch.getMetric());
+
+
+        System.out.println("\n\n A STAR -- MisPlaced Tiles");
+        Problem problem2 = new Problem(goalTest, puzzleState, new UniformCostFuncton());
+        Search aStarSearch2 = new AStarSearch(new TilesMisplacedHeuristics());
+        Optional<Node> result2 = aStarSearch2.search(problem1);
+        result2.ifPresent(r -> System.out.println(r.getState()));
+        System.out.println(aStarSearch2.getMetric());
+
     }
 
 }
