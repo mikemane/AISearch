@@ -37,6 +37,10 @@ public class Problem {
         return pathCostFunction;
     }
 
+    public void setPathCostFunction(CostFunction pathCostFunction) {
+        this.pathCostFunction = pathCostFunction;
+    }
+
     public State getInitialState() {
         return initialState;
     }

@@ -28,9 +28,9 @@ public class Node implements Comparable {
         this.sethCost(0);
     }
 
-    public Node(Node parent,  double cost, State state) {
+    public Node(Node parent, double cost, State state) {
         setParent(parent);
-        setfCost(cost);
+        setgCost(cost);
         setState(state);
     }
 
@@ -121,22 +121,33 @@ public class Node implements Comparable {
     @Override
     public int compareTo(Object o) {
         Node node = ((Node) o);
-        return Double.compare(this.getfCost() , node.getfCost());
+        return Double.compare(this.getgCost(), node.getgCost());
     }
 
-    public boolean isRoot(){
+    public boolean isRoot() {
         return this.parent == null;
     }
 
-    public List<Node> getPath(){
+    public List<Node> getPath() {
         List<Node> nodes = new ArrayList<>();
         Node currentNode = this;
-        while(!currentNode.isRoot()){
-            nodes.add(0,currentNode);
+        while (!currentNode.isRoot()) {
+            nodes.add(0, currentNode);
             currentNode = currentNode.parent;
         }
-        nodes.add(0,currentNode);
+        nodes.add(0, currentNode);
         return nodes;
     }
+
+    public int getSize() {
+        Node current = this;
+        int count = 0;
+        while (!current.isRoot()) {
+            count++;
+            current = current.parent;
+        }
+        return count;
+    }
+
 
 }

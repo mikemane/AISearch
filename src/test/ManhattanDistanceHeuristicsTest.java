@@ -1,6 +1,8 @@
-package heuristics;
+package test;
 
 import datastructures.State;
+import heuristics.Heuristics;
+import heuristics.ManhattanDistanceHeuristics;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

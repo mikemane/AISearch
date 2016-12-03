@@ -3,6 +3,7 @@ package datastructures;
 import board.EightPuzzleBoard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -22,11 +23,10 @@ public class ExpandNode {
      * Creates a node with the relevant values.
      *
      * @param parent this is the parent node.
-     * @param cost   this is the cost that is associated with this node.
      * @param state  this is the current state of the board.
      * @return the created node.
      */
-    private Node createNode(Node parent,  double cost, State state) {
+    private Node createNode(Node parent, double cost, State state) {
         return new Node(parent, cost, state);
     }
 
@@ -38,14 +38,22 @@ public class ExpandNode {
      */
     public List<Node> expandNode(Node parentNode) {
         List<Node> successors = new ArrayList<>();
-        for (Action direction : Action.values()) {
-            if (parentNode.getState().canMove(direction)) {
-                State newState = parentNode.getState().move(direction);
+//        for (Action direction : Action.values()) {
+//            if (parentNode.getState().canMove(direction)) {
+//                State newState = parentNode.getState().move(direction);
+////                double cost = this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
+//                Node newNode = createNode(parentNode, parentNode.getgCost() + 1, newState);
+//                successors.add(newNode);
+//            }
+//        }
+        Arrays.stream(Action.values()).forEach(action -> {
+            if (parentNode.getState().canMove(action)) {
+                State newState = parentNode.getState().move(action);
                 double cost = this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
-                Node newNode = createNode(parentNode,  cost, newState);
+                Node newNode = new Node(parentNode, parentNode.getgCost() + 1, newState);
                 successors.add(newNode);
             }
-        }
+        });
         numberOfExpansions++;
         return successors;
     }

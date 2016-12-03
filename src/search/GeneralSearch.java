@@ -1,59 +1,98 @@
 package search;
 
+import HeuristicFunction.HeuristicFunction;
+import costfunctions.CostFunction;
 import datastructures.*;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * Created by un4 on 29/11/16.
  */
-public abstract class GeneralSearch implements Search {
-
-
-    protected HashSet<State> openSet;
+public class GeneralSearch implements Search {
     protected HashSet<State> closedSet;
-    protected PriorityQueue<Node> queueNode;
+    protected Queue<Node> queueNode;
     protected Problem problem;
     protected Node rootNode;
     protected double metrics;
+    protected ExpandNode expandNode;
+    protected HeuristicFunction heuristicFunction;
+    protected HashMap<State, Node> openSet;
+    protected Comparator<Node> nodeComparator;
 
-    public GeneralSearch(Problem problem) {
-        this();
-        this.setProblem(problem);
+    public GeneralSearch(Comparator<Node> nodeComparator) {
+        this.closedSet = new HashSet<>();
+        this.openSet = new HashMap<>();
+        this.metrics = 0;
+        this.nodeComparator = nodeComparator;
     }
 
-    public GeneralSearch() {
-        this.closedSet = new HashSet<>();
-        this.openSet = new HashSet<>();
-        Comparator<Node> comparator = new NodeComparator();
-        this.queueNode = new PriorityQueue<>(11, comparator);
-        this.metrics = 0;
+    public GeneralSearch(HeuristicFunction costFunction, Comparator<Node> comparator) {
+        this(comparator);
+        this.heuristicFunction = costFunction;
+
     }
 
     public void setProblem(Problem problem) {
         this.problem = problem;
-        this.rootNode = new Node(null, 0, this.problem.getInitialState());
     }
+
+
+    @Override
+    public Optional<Node> search(Problem problem, Queue<Node> queueFunction) {
+        this.queueNode = queueFunction;
+        this.setProblem(problem);
+        this.expandNode = new ExpandNode(problem);
+        Node node = new Node(null, 0, problem.getInitialState());
+
+        this.clearObjects();
+        this.add(node);
+        while (!queueNode.isEmpty()) {
+            Node currentNode = this.removeTopNode();
+            if (problem.goalState().equals(currentNode.getState())) {
+                return Optional.of(currentNode);
+            }
+
+            this.expandNode.expandNode(currentNode).forEach(n -> {
+                double hCost = this.heuristicFunction.calculateCost(n.getState(), problem.goalState());
+                n.sethCost(hCost);
+                n.setfCost(currentNode.getgCost() + n.gethCost());
+                this.add(n);
+            });
+        }
+        return Optional.empty();
+
+    }
+
 
     protected void add(Node node) {
         if (!contains(node)) {
-            this.queueNode.add(node);
-            this.openSet.add(node.getState());
+            if (this.openSet.containsKey(node.getState())) {
+                Node updateNode = this.openSet.get(node.getState());
+                if (nodeComparator.compare(node, updateNode) < 0) {
+                    if (queueNode.remove(updateNode)) {
+                        openSet.remove(updateNode.getState());
+                    }
+                    this.openSet.put(node.getState(), node);
+                    this.queueNode.add(node);
+                }
+            } else {
+                this.queueNode.add(node);
+                this.openSet.put(node.getState(), node);
+            }
         }
     }
 
     protected void clearObjects() {
         this.queueNode.clear();
-        this.openSet.clear();
         this.closedSet.clear();
     }
 
     protected Node removeTopNode() {
+        this.metrics++;
         Node node = this.queueNode.poll();
-        this.closedSet.add(node.getState());
         this.openSet.remove(node.getState());
+        this.closedSet.add(node.getState());
         return node;
     }
 
@@ -62,10 +101,8 @@ public abstract class GeneralSearch implements Search {
         return this.metrics;
     }
 
-
     public boolean contains(Node node) {
-        return this.openSet.contains(node.getState()) || this.closedSet.contains(node.getState());
+        return this.closedSet.contains(node.getState());
     }
-
 
 }

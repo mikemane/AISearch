@@ -26,7 +26,6 @@ public class BreadFirstSearch implements Search {
     public BreadFirstSearch() {
         this.openStateSet = new HashSet<>();
         this.closedStateSet = new HashSet<>();
-        this.queue = new PriorityQueue<>();
     }
 
     public void setProblem(Problem problem) {
@@ -35,29 +34,27 @@ public class BreadFirstSearch implements Search {
     }
 
     @Override
-    public Optional<Node> search(Problem problem) {
+    public Optional<Node> search(Problem problem, Queue<Node> queue) {
         this.setProblem(problem);
-        this.rootNode = new Node(null,problem.getInitialState());
+        this.queue = queue;
+        this.rootNode = new Node(null, problem.getInitialState());
         return this.bfs();
     }
 
 
     public Optional<Node> bfs() {
         this.closedStateSet.clear();
-        this.queue.clear();
         this.openStateSet.clear();
         Node node = this.rootNode;
         this.addToSet(node);
         while (!queue.isEmpty()) {
             Node eNode = this.removeFirstFromSet();
             if (problem.goalState().equals(eNode.getState())) {
-                this.metrics = eNode.getfCost();
+//                this.metrics = eNode.getfCost();
                 return Optional.of(eNode);
             }
             List<Node> nodes = this.expandNode.expandNode(eNode);
-            for (Node sNode : nodes) {
-                this.addToSet(sNode);
-            }
+            nodes.forEach(this::addToSet);
         }
         return Optional.empty();
     }
@@ -65,10 +62,11 @@ public class BreadFirstSearch implements Search {
 
     @Override
     public double getMetric() {
-        return metrics + this.expandNode.getNumberOfExpansions();
+        return metrics;
     }
 
     private Node removeFirstFromSet() {
+        this.metrics++;
         Node node = this.queue.poll();
         this.closedStateSet.add(node.getState());
         this.openStateSet.remove(node.getState());
