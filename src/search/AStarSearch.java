@@ -1,10 +1,7 @@
 package search;
 
-import HeuristicFunction.HeuristicFunction;
+import heuristicFunction.HeuristicFunction;
 import datastructures.ComparatorUtil;
-import datastructures.Node;
-
-import java.util.Comparator;
 
 /**
  * Created by un4 on 02/12/16.

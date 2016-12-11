@@ -1,37 +1,47 @@
 package datastructures;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by mikemane on 04/11/2016.
  */
 public class Node implements Comparable {
     private Node parent;
-    private Set<Node> children;
+    private HashMap<Action, Node> children;
     private double gCost;
     private double hCost;
     private double fCost;
     private State state;
+    private Action action;
 
     public Node() {
         this.fCost = 0;
     }
 
-    public Node(Node parent, State state) {
+    public Node(Node parent, Action action, State state) {
         this.parent = parent;
         this.state = state;
         this.setfCost(0);
         this.setgCost(0);
         this.sethCost(0);
+        this.setAction(action);
+        this.children = new HashMap<>();
     }
 
-    public Node(Node parent, double cost, State state) {
+    public Node(Node parent, Action action, double cost, State state) {
         setParent(parent);
         setgCost(cost);
+        setAction(action);
         setState(state);
+        this.children = new HashMap<>();
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public Action getAction() {
+        return action;
     }
 
     public void setfCost(double fCost) {
@@ -58,12 +68,21 @@ public class Node implements Comparable {
         return hCost;
     }
 
-    public void setChildren(Set<Node> children) {
+    public HashMap<Action, Node> getChildren() {
+        return children;
+    }
+
+    public Optional<Node> getChildAtAction(Action direction) {
+        Node node = this.children.get(direction);
+        return Optional.of(node);
+    }
+
+    public void setChildren(HashMap<Action, Node> children) {
         this.children = children;
     }
 
-    public Set<Node> getChildren() {
-        return this.children;
+    public void addChild(Action action, Node node) {
+        this.children.put(action, node);
     }
 
     public State getState() {
@@ -82,36 +101,6 @@ public class Node implements Comparable {
         this.parent = parent;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node node = (Node) o;
-        if (Double.compare(node.gCost, gCost) != 0) return false;
-        if (Double.compare(node.hCost, hCost) != 0) return false;
-        if (Double.compare(node.fCost, fCost) != 0) return false;
-        if (parent != null ? !parent.equals(node.parent) : node.parent != null) return false;
-        if (children != null ? !children.equals(node.children) : node.children != null) return false;
-        return state != null ? state.equals(node.state) : node.state == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = parent != null ? parent.hashCode() : 0;
-        result = 31 * result + (children != null ? children.hashCode() : 0);
-        temp = Double.doubleToLongBits(gCost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(hCost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(fCost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        return result;
-    }
 
     @Override
     public String toString() {

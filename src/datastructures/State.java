@@ -15,6 +15,7 @@ import static board.EightPuzzleBoard.EMPTY_POSITION;
 public class State {
 
     private int[] currentState;
+    private int size = 3;
 
     public State(int[] currentState) {
         this.currentState = new int[currentState.length];
@@ -196,5 +197,27 @@ public class State {
         }
         return builder.toString();
     }
+
+    public int[] getRows(int value){
+        int[] rows = new int[size];
+        Coordinates coord = getCoordinates(value);
+        for(int i = 0 ; i < this.size; i++){
+            rows[i] = getValueAtPosition(coord.getX() , i);
+        }
+        return rows;
+    }
+
+    public int[] getColumns(int value){
+        int [] cols = new int[size];
+        Coordinates coord = getCoordinates(value);
+        for(int i = 0 ; i < this.size; i++){
+            cols[i] = getValueAtPosition(i , coord.getY());
+        }
+        return cols;
+    }
+
+//    public int getAccurateRow(int value){
+//        return po
+//    }
 
 }

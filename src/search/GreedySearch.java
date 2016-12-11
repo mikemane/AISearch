@@ -1,6 +1,6 @@
 package search;
 
-import HeuristicFunction.HeuristicFunction;
+import heuristicFunction.HeuristicFunction;
 import datastructures.ComparatorUtil;
 
 /**

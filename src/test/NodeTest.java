@@ -16,9 +16,9 @@ public class NodeTest {
         State state = new State(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0});
         State state1 = new State(new int[]{1, 2, 3, 4, 5, 6, 7, 0, 8});
 
-        Node node = new Node(null,10, state);
-        Node node1 = new Node(null,10, state);
-        Node node2 = new Node(null,1, state1);
+        Node node = new Node(null, null, 10, state);
+        Node node1 = new Node(null, null, 10, state);
+        Node node2 = new Node(null, null, 1, state1);
 
         assertEquals(node, node1);
         assertNotEquals(node, node2);

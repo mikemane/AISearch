@@ -1,7 +1,6 @@
 package search;
 
-import HeuristicFunction.HeuristicFunction;
-import costfunctions.CostFunction;
+import heuristicFunction.HeuristicFunction;
 import datastructures.*;
 
 import java.util.*;
@@ -19,6 +18,7 @@ public class GeneralSearch implements Search {
     protected HeuristicFunction heuristicFunction;
     protected HashMap<State, Node> openSet;
     protected Comparator<Node> nodeComparator;
+    protected String timeSpent;
 
     public GeneralSearch(Comparator<Node> nodeComparator) {
         this.closedSet = new HashSet<>();
@@ -40,16 +40,20 @@ public class GeneralSearch implements Search {
 
     @Override
     public Optional<Node> search(Problem problem, Queue<Node> queueFunction) {
+        this.metrics = 0;
+        this.timeSpent = "";
+        long t = System.currentTimeMillis();
         this.queueNode = queueFunction;
         this.setProblem(problem);
         this.expandNode = new ExpandNode(problem);
-        Node node = new Node(null, 0, problem.getInitialState());
+        Node node = new Node(null, null, 0, problem.getInitialState());
 
         this.clearObjects();
         this.add(node);
         while (!queueNode.isEmpty()) {
             Node currentNode = this.removeTopNode();
             if (problem.goalState().equals(currentNode.getState())) {
+                this.timeSpent = String.valueOf(System.currentTimeMillis() - t);
                 return Optional.of(currentNode);
             }
 
@@ -60,8 +64,8 @@ public class GeneralSearch implements Search {
                 this.add(n);
             });
         }
+        this.timeSpent = String.valueOf(System.currentTimeMillis() - t);
         return Optional.empty();
-
     }
 
 
@@ -101,8 +105,17 @@ public class GeneralSearch implements Search {
         return this.metrics;
     }
 
+    @Override
+    public String timeSpent() {
+        return timeSpent;
+    }
+
     public boolean contains(Node node) {
         return this.closedSet.contains(node.getState());
+    }
+
+    public String getTimeSpent() {
+        return timeSpent;
     }
 
 }

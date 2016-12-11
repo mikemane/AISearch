@@ -15,12 +15,13 @@ public class BreadFirstSearch implements Search {
     private HashSet<State> closedStateSet;
     private HashSet<State> openStateSet;
     private Node rootNode;
+    protected String timeSpent;
 
     public BreadFirstSearch(Problem p) {
         this();
         this.problem = p;
         this.expandNode = new ExpandNode(p);
-        this.rootNode = new Node(null, 0, problem.getInitialState());
+        this.rootNode = new Node(null, null, 0, problem.getInitialState());
     }
 
     public BreadFirstSearch() {
@@ -37,12 +38,14 @@ public class BreadFirstSearch implements Search {
     public Optional<Node> search(Problem problem, Queue<Node> queue) {
         this.setProblem(problem);
         this.queue = queue;
-        this.rootNode = new Node(null, problem.getInitialState());
+        this.rootNode = new Node(null, null, problem.getInitialState());
         return this.bfs();
     }
 
 
     public Optional<Node> bfs() {
+        long t = System.currentTimeMillis();
+        this.metrics = 0;
         this.closedStateSet.clear();
         this.openStateSet.clear();
         Node node = this.rootNode;
@@ -51,11 +54,13 @@ public class BreadFirstSearch implements Search {
             Node eNode = this.removeFirstFromSet();
             if (problem.goalState().equals(eNode.getState())) {
 //                this.metrics = eNode.getfCost();
+                this.timeSpent = String.valueOf(System.currentTimeMillis() - t);
                 return Optional.of(eNode);
             }
             List<Node> nodes = this.expandNode.expandNode(eNode);
             nodes.forEach(this::addToSet);
         }
+        this.timeSpent = String.valueOf(System.currentTimeMillis() - t);
         return Optional.empty();
     }
 
@@ -63,6 +68,11 @@ public class BreadFirstSearch implements Search {
     @Override
     public double getMetric() {
         return metrics;
+    }
+
+    @Override
+    public String timeSpent() {
+        return timeSpent;
     }
 
     private Node removeFirstFromSet() {

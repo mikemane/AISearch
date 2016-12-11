@@ -1,4 +1,4 @@
-package HeuristicFunction;
+package heuristicFunction;
 
 import datastructures.State;
 

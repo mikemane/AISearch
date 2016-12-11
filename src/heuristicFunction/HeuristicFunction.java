@@ -1,4 +1,4 @@
-package HeuristicFunction;
+package heuristicFunction;
 
 import costfunctions.CostFunction;
 import datastructures.State;

@@ -26,8 +26,8 @@ public class ExpandNode {
      * @param state  this is the current state of the board.
      * @return the created node.
      */
-    private Node createNode(Node parent, double cost, State state) {
-        return new Node(parent, cost, state);
+    private Node createNode(Node parent, Action action, double cost, State state) {
+        return new Node(parent, action, cost, state);
     }
 
     /**
@@ -50,7 +50,8 @@ public class ExpandNode {
             if (parentNode.getState().canMove(action)) {
                 State newState = parentNode.getState().move(action);
                 double cost = this.problem.getPathCostFunction().calculateCost(parentNode.getState(), newState);
-                Node newNode = new Node(parentNode, parentNode.getgCost() + 1, newState);
+                Node newNode = new Node(parentNode, action, parentNode.getgCost() + 1, newState);
+                parentNode.addChild(action, newNode);
                 successors.add(newNode);
             }
         });

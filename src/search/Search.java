@@ -13,7 +13,10 @@ import java.util.Queue;
  */
 public interface Search {
 
-    public Optional<Node> search(Problem problem , Queue<Node> queueFunction);
+    public Optional<Node> search(Problem problem, Queue<Node> queueFunction);
+
     public double getMetric();
+
+    public String timeSpent();
 
 }
