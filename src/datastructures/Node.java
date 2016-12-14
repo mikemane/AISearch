@@ -13,6 +13,8 @@ public class Node implements Comparable {
     private double fCost;
     private State state;
     private Action action;
+    private boolean isSolutionPath;
+
 
     public Node() {
         this.fCost = 0;
@@ -26,6 +28,7 @@ public class Node implements Comparable {
         this.sethCost(0);
         this.setAction(action);
         this.children = new HashMap<>();
+        this.isSolutionPath = true;
     }
 
     public Node(Node parent, Action action, double cost, State state) {
@@ -34,6 +37,15 @@ public class Node implements Comparable {
         setAction(action);
         setState(state);
         this.children = new HashMap<>();
+        setSolutionPath(false);
+    }
+
+    public void setSolutionPath(boolean solutionPath) {
+        isSolutionPath = solutionPath;
+    }
+
+    public boolean isSolutionPath() {
+        return isSolutionPath;
     }
 
     public void setAction(Action action) {
@@ -128,6 +140,21 @@ public class Node implements Comparable {
         return nodes;
     }
 
+    public Node getRoot() {
+        Node root = this;
+        while ((root.parent != null))
+            root = root.parent;
+        return root;
+    }
+
+    public void setSolutionPath() {
+        Node current = this;
+        while (current.parent != null) {
+            current.setSolutionPath(true);
+            current = current.parent;
+        }
+    }
+
     public int getSize() {
         Node current = this;
         int count = 0;
@@ -137,6 +164,4 @@ public class Node implements Comparable {
         }
         return count;
     }
-
-
 }

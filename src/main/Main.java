@@ -1,5 +1,6 @@
 package main;
 
+import gui.SearchType;
 import heuristicFunction.HeuristicFunction;
 import datastructures.ComparatorUtil;
 import datastructures.GoalTest;
@@ -35,17 +36,12 @@ public class Main {
 //        int[] puzzle = new int[]{8, 6, 7, 2, 5, 4, 3, 0, 1};
 //        int[] puzzle = new int[]{1, 2, 3, 4, 5, 6, 7, 0, 8};
 
-
         int[] goal = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0};
         int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
-
 //        int[] goal = {1, 2, 3, 8, 0, 4, 7, 6, 5};
 //        int[] puzzle = {5, 6, 7, 4, 0, 8, 3, 2, 1};
-
         State puzzleState = new State(puzzle);
-
-        System.out.println("Problem " + Arrays.toString(puzzle) + "\n\n");
-
+//        System.out.println("Problem " + Arrays.toString(puzzle) + "\n\n");
         GoalTest goalTest = new GoalTest(new State(goal));
         Problem problem = new Problem(goalTest, puzzleState, new NoCostFunction());
 //        Search bfs = new BreadFirstSearch();
@@ -54,24 +50,24 @@ public class Main {
 //        System.out.println("Breadth first Search: " + bfs.getMetric() + " Number of Expansions \n");
 //        System.out.println(bfs.timeSpent());
 
-        Heuristics heuristics = new TilesMisplacedHeuristics(); //new ManhattanDistanceHeuristics(); //new TilesMisplacedHeuristics();
-
-//        Comparator<Node> aStarComp = ComparatorUtil.getComparator(ComparatorUtil.CompType.ASTAR);
+//        Heuristics heuristics = new TilesMisplacedHeuristics(); //new ManhattanDistanceHeuristics(); //new TilesMisplacedHeuristics();
+//
+//        Comparator<Node> aStarComp = ComparatorUtil.getComparator(SearchType.ASTAR);
 //        PriorityQueue<Node> aStarQueue = new PriorityQueue<>(9, aStarComp);
 //        Search aStar = new GeneralSearch(new HeuristicFunction(heuristics), aStarComp);
 //        Optional<Node> aStarResult = aStar.search(problem, aStarQueue);
 ////        aStarResult.ifPresent(res -> System.out.println(res.getSize()));
 //        System.out.println("AStar Search : " + aStar.getMetric() + " Number of expansions \n");
 //        System.out.println(aStar.timeSpent());
-
-        Comparator<Node> greedyComp = ComparatorUtil.getComparator(ComparatorUtil.CompType.GREEDY);
-        PriorityQueue<Node> greedyQueue = new PriorityQueue<>(9, greedyComp);
-        Search greedy = new GeneralSearch(new HeuristicFunction(heuristics), greedyComp);
-        Optional<Node> greedyRes = greedy.search(problem, greedyQueue);
-//        greedyRes.ifPresent(res -> System.out.println(res.getSize()));
-        System.out.println("Greedy Search : " + greedy.getMetric() + " Number of expansions \n");
-        System.out.println(greedy.timeSpent());
-
+//
+//        Comparator<Node> greedyComp = ComparatorUtil.getComparator(SearchType.GREEDY);
+//        PriorityQueue<Node> greedyQueue = new PriorityQueue<>(9, greedyComp);
+//        Search greedy = new GeneralSearch(new HeuristicFunction(heuristics), greedyComp);
+//        Optional<Node> greedyRes = greedy.search(problem, greedyQueue);
+////        greedyRes.ifPresent(res -> System.out.println(res.getSize()));
+//        System.out.println("Greedy Search : " + greedy.getMetric() + " Number of expansions \n");
+//        System.out.println(greedy.timeSpent());
+//
 //        Comparator<Node> uniformComp = ComparatorUtil.getComparator(ComparatorUtil.CompType.UNIFORM);
 //        PriorityQueue<Node> uniformQueue = new PriorityQueue<>(9, uniformComp);
 //        Search uniformSearch = new GeneralSearch(new HeuristicFunction(heuristics), uniformComp);
@@ -81,6 +77,5 @@ public class Main {
 //        System.out.println(uniformSearch.timeSpent());
 
         GUI gui = new GUI(new SearchModel());
-
     }
 }

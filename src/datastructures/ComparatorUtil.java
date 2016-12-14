@@ -1,6 +1,8 @@
 package datastructures;
 
 import datastructures.Node;
+import gui.SearchType;
+import search.Search;
 
 import java.util.Comparator;
 
@@ -9,11 +11,11 @@ import java.util.Comparator;
  */
 public class ComparatorUtil {
 
-    public enum CompType {
-        GREEDY, ASTAR, UNIFORM;
-    }
+//    public enum CompType {
+//        GREEDY, ASTAR, UNIFORM;
+//    }
 
-    public static Comparator<Node> getComparator(CompType type) {
+    public static Comparator<Node> getComparator(SearchType type) {
         Comparator<Node> comparator = (node, t1) -> {
             switch (type) {
                 case GREEDY:

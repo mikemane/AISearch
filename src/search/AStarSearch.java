@@ -1,5 +1,6 @@
 package search;
 
+import gui.SearchType;
 import heuristicFunction.HeuristicFunction;
 import datastructures.ComparatorUtil;
 
@@ -8,6 +9,6 @@ import datastructures.ComparatorUtil;
  */
 public class AStarSearch extends GeneralSearch {
     public AStarSearch(HeuristicFunction heuristicFunction) {
-        super(heuristicFunction, ComparatorUtil.getComparator(ComparatorUtil.CompType.ASTAR));
+        super(heuristicFunction, ComparatorUtil.getComparator(SearchType.ASTAR));
     }
 }

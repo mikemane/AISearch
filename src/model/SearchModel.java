@@ -21,11 +21,12 @@ public class SearchModel extends Observable {
 
     private Search search;
     private Heuristics heuristics;
+    private HeuristicFunction heuristicFunction;
     private Problem problem;
     private Stack<HashSet<Node>> nodes;
     private SearchFactory searchFactory;
     private SearchType searchType;
-
+    private String stats;
 
     public SearchModel(Search search, Heuristics heuristic, State currentState, State goalState) {
         this.search = search;
@@ -38,7 +39,11 @@ public class SearchModel extends Observable {
 
 
     public SearchModel() {
-        this(new BreadFirstSearch(), new UniformSearchHeuristics(), new State(new int[]{8, 7, 6, 5, 4, 3, 2, 1, 0}), new State(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0}));
+//        int[] goal = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0};
+//        int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
+//        int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
+        this(new BreadFirstSearch(), new UniformSearchHeuristics(), new State(new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0}), new State(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0}));
+        ;
     }
 
 //    public void setSearch(Search search) {
@@ -47,11 +52,22 @@ public class SearchModel extends Observable {
 
     public void setHeuristics(Heuristics heuristics) {
         this.heuristics = heuristics;
+        this.setHeuristicFunction(new HeuristicFunction(heuristics));
+        this.setSearch(this.searchType);
     }
 
 //    public void (State currentState) {
 //        this.currentState = currentState;
 //}
+
+
+    public void setHeuristicFunction(HeuristicFunction heuristicFunction) {
+        this.heuristicFunction = heuristicFunction;
+    }
+
+    public HeuristicFunction getHeuristicFunction() {
+        return heuristicFunction;
+    }
 
     public void expand(Node node) {
         HashSet<Node> nodes = new HashSet<>(node.getChildren().values());
@@ -77,7 +93,7 @@ public class SearchModel extends Observable {
 
     public void setSearch(SearchType type) {
         this.searchType = type;
-        this.searchFactory.getSearch(type, new HeuristicFunction(this.heuristics));
+        this.search = this.searchFactory.getSearch(type, new HeuristicFunction(this.heuristics));
     }
 
     public void search() {
@@ -85,13 +101,23 @@ public class SearchModel extends Observable {
         node.ifPresent(n -> {
             this.nodes.clear();
             HashSet<Node> set = new HashSet<>();
-            set.add(n);
+            n.setSolutionPath();
+            set.add(n.getRoot());
             this.nodes.add(set);
-            System.out.println(this.searchType);
-            System.out.println(search.getMetric());
-            System.out.println(search.timeSpent());
+
+            this.stats = this.searchType + " : " +
+                    "\nNo Of Expansions: " + search.getMetric() + " \n" +
+                    "Time Spent in Calculating: " + search.timeSpent() + "m/s";
+
+//            System.out.println(this.searchType);
+//            System.out.println(search.getMetric());
+//            System.out.println(search.timeSpent());
             this.setChanged();
             this.notifyObservers();
         });
+    }
+
+    public String getStats() {
+        return stats;
     }
 }

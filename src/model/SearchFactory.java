@@ -21,13 +21,16 @@ public class SearchFactory {
         Search search;
         switch (searchType) {
             case ASTAR:
-                search = new AStarSearch(heuristicFunction);
-                break;
             case GREEDY:
-                search = new GreedySearch(heuristicFunction);
-                break;
             case UNIFORM:
-                search = new GeneralSearch(new HeuristicFunction(new UniformSearchHeuristics()), ComparatorUtil.getComparator(ComparatorUtil.CompType.UNIFORM));
+                search = new GeneralSearch(heuristicFunction, ComparatorUtil.getComparator(searchType));
+//                search = new AStarSearch(heuristicFunction);
+//                break;
+//            case GREEDY:
+//                search = new GreedySearch(heuristicFunction);
+//                break;
+//            case UNIFORM:
+//                search = new GeneralSearch(new HeuristicFunction(new UniformSearchHeuristics()), ComparatorUtil.getComparator(ComparatorUtil.CompType.UNIFORM));
                 break;
             case BFS:
                 search = new BreadFirstSearch();
@@ -46,13 +49,13 @@ public class SearchFactory {
                 queueFunction = new LinkedList<>();
                 break;
             case ASTAR:
-                queueFunction = new PriorityQueue<>(11, ComparatorUtil.getComparator(ComparatorUtil.CompType.ASTAR));
+                queueFunction = new PriorityQueue<>(9, ComparatorUtil.getComparator(SearchType.ASTAR));
                 break;
             case GREEDY:
-                queueFunction = new PriorityQueue<>(11, ComparatorUtil.getComparator(ComparatorUtil.CompType.ASTAR));
+                queueFunction = new PriorityQueue<>(11, ComparatorUtil.getComparator(SearchType.GREEDY));
                 break;
             case UNIFORM:
-                queueFunction = new PriorityQueue<>(11, ComparatorUtil.getComparator(ComparatorUtil.CompType.ASTAR));
+                queueFunction = new PriorityQueue<>(11, ComparatorUtil.getComparator(SearchType.UNIFORM));
                 break;
             default:
                 queueFunction = new LinkedList<>();

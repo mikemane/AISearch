@@ -185,7 +185,7 @@ public class State {
         int counter = 0;
         for (int i : getCurrentState()) {
             if (counter % 3 == 0 && counter != 0)
-                builder.append("\n")
+                builder.append(System.getProperty("line.separator"))
                         .append("| ")
                         .append(i)
                         .append(" |");
@@ -198,20 +198,20 @@ public class State {
         return builder.toString();
     }
 
-    public int[] getRows(int value){
+    public int[] getRows(int value) {
         int[] rows = new int[size];
         Coordinates coord = getCoordinates(value);
-        for(int i = 0 ; i < this.size; i++){
-            rows[i] = getValueAtPosition(coord.getX() , i);
+        for (int i = 0; i < this.size; i++) {
+            rows[i] = getValueAtPosition(coord.getX(), i);
         }
         return rows;
     }
 
-    public int[] getColumns(int value){
-        int [] cols = new int[size];
+    public int[] getColumns(int value) {
+        int[] cols = new int[size];
         Coordinates coord = getCoordinates(value);
-        for(int i = 0 ; i < this.size; i++){
-            cols[i] = getValueAtPosition(i , coord.getY());
+        for (int i = 0; i < this.size; i++) {
+            cols[i] = getValueAtPosition(i, coord.getY());
         }
         return cols;
     }

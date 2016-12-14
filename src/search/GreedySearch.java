@@ -1,5 +1,6 @@
 package search;
 
+import gui.SearchType;
 import heuristicFunction.HeuristicFunction;
 import datastructures.ComparatorUtil;
 
@@ -9,6 +10,6 @@ import datastructures.ComparatorUtil;
 public class GreedySearch extends GeneralSearch {
 
     public GreedySearch(HeuristicFunction heuristicFunction) {
-        super(heuristicFunction, ComparatorUtil.getComparator(ComparatorUtil.CompType.GREEDY));
+        super(heuristicFunction, ComparatorUtil.getComparator(SearchType.GREEDY));
     }
 }
