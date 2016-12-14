@@ -26,12 +26,10 @@ public class GUI implements Observer {
     JPanel mainPanel, topPanel, centerPanel, centerBLeft, centerBRight, centerTopPanel, centerButtomPanel, sideBar, bottomPanel;
     JButton searchTechnique, previousLayer;
     JRadioButton bfs, aStar, uniform, greedy;
-    JButton searchButton;
+    JButton searchButton , customState;
     SearchModel searchModel;
     JLabel searchLabel;
     JTextArea metricsInformation;
-
-
     ButtonGroup searchButtonGroup;
     JComboBox comboBox;
     SearchType searchType;
@@ -54,13 +52,15 @@ public class GUI implements Observer {
 
         centerBRight.add(metricsInformation);
 
-        centerBLeft.setBackground(Color.GREEN);
-        centerBRight.setBackground(Color.RED);
+//        centerBLeft.setBackground(Color.GREEN);
+        centerBRight.setBackground(Color.LIGHT_GRAY);
 
         centerButtomPanel = new JPanel(new GridLayout(0, 2));
 
-        centerTopPanel.setBackground(Color.DARK_GRAY);
-        centerButtomPanel.setBackground(Color.DARK_GRAY);
+        customState = createButton("Custom Tile" , sideBar);
+        customState.addActionListener(e -> enterCustomState());
+
+
 
         bottomPanel = new JPanel();
 
@@ -124,6 +124,12 @@ public class GUI implements Observer {
 
         frame.add(mainPanel);
         frame.setVisible(true);
+    }
+
+    void enterCustomState(){
+        String state = JOptionPane.showInputDialog(null,"Enter a custom state eg 1,2,3,4,5,6,7,8");
+        int[] integerState = Arrays.stream(state.split(",")).mapToInt(Integer::parseInt).toArray();
+
     }
 
     JRadioButton createRadioButton(String name, ButtonGroup group) {
@@ -194,22 +200,29 @@ public class GUI implements Observer {
             @Override
             public void run() {
                 centerTopPanel.removeAll();
+                centerTopPanel.revalidate();
+                centerPanel.revalidate();
                 //To d
                 // o display
                 searchModel.getNodes().ifPresent(n -> n.forEach(node -> {
 
                     JButton button = createButton();
                     centerTopPanel.add(button);
-                    button.addActionListener(e -> exploreChildren());
+                    if (node.isSolutionPath()) {
+                        Border line = new LineBorder(Color.GREEN);
+                        button.setBorder(line);
+                        button.setSize(100,100);
+                    }
+                    button.addActionListener(e -> searchModel.expand(node));
                     updateButtonItems(node, button);
-
                     metricsInformation.setText(searchModel.getStats());
-                    centerTopPanel.revalidate();
-                    centerTopPanel.repaint();
-                    centerPanel.revalidate();
-                    centerPanel.repaint();
-                    mainPanel.repaint();
+
+
                 }));
+
+                centerTopPanel.repaint();
+                centerPanel.repaint();
+                mainPanel.repaint();
             }
         });
     }
@@ -249,7 +262,7 @@ public class GUI implements Observer {
         this.searchModel.popStack();
     }
 
-    public void exploreChildren() {
-
+    public void exploreChildren(Node node) {
+        searchModel.expand(node);
     }
 }

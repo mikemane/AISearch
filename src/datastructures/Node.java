@@ -14,6 +14,7 @@ public class Node implements Comparable {
     private State state;
     private Action action;
     private boolean isSolutionPath;
+    private UUID uuid;
 
 
     public Node() {
@@ -28,7 +29,7 @@ public class Node implements Comparable {
         this.sethCost(0);
         this.setAction(action);
         this.children = new HashMap<>();
-        this.isSolutionPath = true;
+        setSolutionPath(false);
     }
 
     public Node(Node parent, Action action, double cost, State state) {
@@ -39,6 +40,7 @@ public class Node implements Comparable {
         this.children = new HashMap<>();
         setSolutionPath(false);
     }
+
 
     public void setSolutionPath(boolean solutionPath) {
         isSolutionPath = solutionPath;

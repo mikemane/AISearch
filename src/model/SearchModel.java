@@ -70,8 +70,9 @@ public class SearchModel extends Observable {
     }
 
     public void expand(Node node) {
+        if (node.getChildren().isEmpty()) return;
         HashSet<Node> nodes = new HashSet<>(node.getChildren().values());
-        this.nodes.add(nodes);
+        this.nodes.push(nodes);
         this.setChanged();
         this.notifyObservers();
     }
