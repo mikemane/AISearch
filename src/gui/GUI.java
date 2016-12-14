@@ -1,6 +1,7 @@
 package gui;
 
 import datastructures.Node;
+import datastructures.State;
 import heuristics.ManhattanDistanceHeuristics;
 import heuristics.TilesMisplacedHeuristics;
 import model.SearchModel;
@@ -26,13 +27,14 @@ public class GUI implements Observer {
     JPanel mainPanel, topPanel, centerPanel, centerBLeft, centerBRight, centerTopPanel, centerButtomPanel, sideBar, bottomPanel;
     JButton searchTechnique, previousLayer;
     JRadioButton bfs, aStar, uniform, greedy;
-    JButton searchButton , customState;
+    JButton searchButton, customState;
     SearchModel searchModel;
     JLabel searchLabel;
     JTextArea metricsInformation;
     ButtonGroup searchButtonGroup;
     JComboBox comboBox;
     SearchType searchType;
+    Integer boardSize;
 
     public GUI(SearchModel model) {
         this.searchModel = model;
@@ -46,9 +48,15 @@ public class GUI implements Observer {
 
         centerTopPanel = new JPanel();
 
+
         metricsInformation = new JTextArea();
+        Font f = new Font("Times Roman", Font.BOLD, 15);
+        metricsInformation.setFont(f);
+        metricsInformation.setText("Statistics");
+
+
         centerBRight = new JPanel();
-        centerBLeft = new JPanel(new GridLayout(3, 3));
+        centerBLeft = new JPanel(new BorderLayout());
 
         centerBRight.add(metricsInformation);
 
@@ -57,9 +65,8 @@ public class GUI implements Observer {
 
         centerButtomPanel = new JPanel(new GridLayout(0, 2));
 
-        customState = createButton("Custom Tile" , sideBar);
+        customState = createButton("Custom Tile", sideBar);
         customState.addActionListener(e -> enterCustomState());
-
 
 
         bottomPanel = new JPanel();
@@ -80,7 +87,7 @@ public class GUI implements Observer {
         previousLayer = createButton("Previous Layer", this.topPanel);
         previousLayer.addActionListener(e -> this.undoAction());
 
-        searchLabel = new JLabel("  Search Type:");
+        searchLabel = new JLabel(" Click tile to expand successors Search Type:");
         topPanel.add(searchLabel);
 
         searchButtonGroup = new ButtonGroup();
@@ -120,15 +127,95 @@ public class GUI implements Observer {
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
-//        centerPanel.add(new JLabel("This is the shit that is lit"));
 
         frame.add(mainPanel);
         frame.setVisible(true);
+
+
+        this.setInitialStates();
     }
 
-    void enterCustomState(){
-        String state = JOptionPane.showInputDialog(null,"Enter a custom state eg 1,2,3,4,5,6,7,8");
-        int[] integerState = Arrays.stream(state.split(",")).mapToInt(Integer::parseInt).toArray();
+    void enterCustomState() {
+        JTextField xField = new JTextField(20);
+        JTextField yField = new JTextField(20);
+
+        JPanel container = new JPanel(new BorderLayout());
+
+        String message = "Start and goal Values in the format E.g: 1,2,3,4,5,6,7,8,0";
+        JPanel myPanel = new JPanel();
+
+        myPanel.add(new JLabel("Start:"));
+        myPanel.add(xField);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Goal:"));
+        myPanel.add(yField);
+
+        container.add(new JLabel(message),BorderLayout.NORTH);
+        container.add(myPanel,BorderLayout.CENTER);
+
+
+        int result = JOptionPane.showConfirmDialog(null, container, "Enter new States", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            searchModel.setStartState(getStartFromString(xField.getText()));
+            searchModel.goalState(getStartFromString(yField.getText()));
+        }
+
+    }
+
+    void setInitialStates() {
+        this.centerBLeft.removeAll();
+        this.centerBLeft.revalidate();
+        //TODO  change this to the current board size.
+
+
+        JPanel header = new JPanel(new GridLayout(0, 2));
+
+
+        header.add(new JLabel("Initial State", SwingConstants.CENTER));
+        header.add(new JLabel("Goal State", SwingConstants.CENTER));
+
+
+        JPanel container = new JPanel(new GridLayout(0, 2));
+
+        JPanel initialState = new JPanel(new GridLayout(3, 3));
+        initialState.setBorder(new LineBorder(Color.BLACK));
+
+        JPanel goalState = new JPanel(new GridLayout(3, 3));
+
+        goalState.setBorder(new LineBorder(Color.GREEN));
+
+        container.add(initialState);
+        container.add(goalState);
+
+        this.centerBLeft.add(header, BorderLayout.NORTH);
+        this.centerBLeft.add(container, BorderLayout.CENTER);
+
+        populatePanel(searchModel.getInitialState(), initialState);
+        populatePanel(searchModel.getGoalState(), goalState);
+
+        centerBLeft.repaint();
+
+
+    }
+
+
+    void populatePanel(State state, JPanel panel) {
+        for (int i : state.getCurrentState()) {
+            JLabel label;
+            if (i == 0) {
+                label = new JLabel();
+            } else {
+                label = new JLabel(String.valueOf(i), SwingConstants.CENTER);
+            }
+            label.setBorder(new LineBorder(Color.BLACK));
+            panel.add(label);
+        }
+    }
+
+
+    State getStartFromString(String string) {
+        int[] currentState = Arrays.stream(string.split(",")).mapToInt(Integer::parseInt).toArray();
+        return new State(currentState);
 
     }
 
@@ -202,6 +289,9 @@ public class GUI implements Observer {
                 centerTopPanel.removeAll();
                 centerTopPanel.revalidate();
                 centerPanel.revalidate();
+
+                setInitialStates();
+
                 //To d
                 // o display
                 searchModel.getNodes().ifPresent(n -> n.forEach(node -> {
@@ -211,7 +301,7 @@ public class GUI implements Observer {
                     if (node.isSolutionPath()) {
                         Border line = new LineBorder(Color.GREEN);
                         button.setBorder(line);
-                        button.setSize(100,100);
+                        button.setSize(100, 100);
                     }
                     button.addActionListener(e -> searchModel.expand(node));
                     updateButtonItems(node, button);
@@ -232,7 +322,7 @@ public class GUI implements Observer {
         String text = "<html>";
         int counter = 0;
         for (int i : node.getState().getCurrentState()) {
-            if (counter != 0 && counter % 3 == 0) {
+            if (counter != 0 && counter % State.SIZE == 0) {
                 text += " " + " <br />";
                 text += "<hr width=\"100%\">";
                 text += " |  " + i + "  | ";
@@ -265,4 +355,6 @@ public class GUI implements Observer {
     public void exploreChildren(Node node) {
         searchModel.expand(node);
     }
+
+
 }

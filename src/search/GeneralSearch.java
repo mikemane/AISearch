@@ -12,7 +12,6 @@ public class GeneralSearch implements Search {
     protected HashSet<State> closedSet;
     protected Queue<Node> queueNode;
     protected Problem problem;
-    protected Node rootNode;
     protected double metrics;
     protected ExpandNode expandNode;
     protected HeuristicFunction heuristicFunction;

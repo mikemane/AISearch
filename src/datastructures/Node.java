@@ -14,7 +14,6 @@ public class Node implements Comparable {
     private State state;
     private Action action;
     private boolean isSolutionPath;
-    private UUID uuid;
 
 
     public Node() {
@@ -157,7 +156,7 @@ public class Node implements Comparable {
         }
     }
 
-    public int getSize() {
+    public int getDepth() {
         Node current = this;
         int count = 0;
         while (!current.isRoot()) {

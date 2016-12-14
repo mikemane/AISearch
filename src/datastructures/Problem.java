@@ -45,4 +45,11 @@ public class Problem {
         return initialState;
     }
 
+    public void setGoalState(State state) {
+        this.goalTest.setGoalState(state);
+    }
+
+    public State getGoalState() {
+        return this.goalTest.getGoalState();
+    }
 }

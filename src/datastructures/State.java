@@ -15,7 +15,7 @@ import static board.EightPuzzleBoard.EMPTY_POSITION;
 public class State {
 
     private int[] currentState;
-    private int size = 3;
+    public static int SIZE = 3;
 
     public State(int[] currentState) {
         this.currentState = new int[currentState.length];
@@ -61,13 +61,13 @@ public class State {
                 result = (getXPosition(absPos) != 0);
                 break;
             case DOWN:
-                result = (getXPosition(absPos) != 2);
+                result = (getXPosition(absPos) != SIZE - 1);
                 break;
             case LEFT:
                 result = (getYPosition(absPos) != 0);
                 break;
             case RIGHT:
-                result = (getYPosition(absPos) != 2);
+                result = (getYPosition(absPos) != SIZE - 1);
                 break;
         }
         return result;
@@ -83,7 +83,8 @@ public class State {
     }
 
     private int getAbsolutePosition(int x, int y) {
-        return x * BOARD_SIZE + y;
+//        System.out.println(x + " " + y);
+        return x * SIZE + y;
     }
 
     /**
@@ -145,7 +146,7 @@ public class State {
         int gapPos = getEmptyPositon();
         int x = getXPosition(gapPos);
         int ypos = getYPosition(gapPos);
-        if (!(ypos == 2)) {
+        if (!(ypos == SIZE - 1)) {
             int valueOnRight = getValueAtPosition(x, ypos + 1);
             updateValue(x, ypos, valueOnRight);
             updateValue(x, ypos + 1, 0);
@@ -168,7 +169,7 @@ public class State {
         int gapPos = getEmptyPositon();
         int x = getXPosition(gapPos);
         int y = getYPosition(gapPos);
-        if (!(x == 2)) {
+        if (!(x == SIZE - 1)) {
             int valueOnBottom = getValueAtPosition(x + 1, y);
             updateValue(x, y, valueOnBottom);
             updateValue(x + 1, y, 0);
@@ -184,39 +185,44 @@ public class State {
         StringBuilder builder = new StringBuilder();
         int counter = 0;
         for (int i : getCurrentState()) {
-            if (counter % 3 == 0 && counter != 0)
-                builder.append(System.getProperty("line.separator"))
-                        .append("| ")
-                        .append(i)
-                        .append(" |");
-            else
-                builder.append("| ")
-                        .append(i)
-                        .append(" |");
+            if (counter % SIZE == 0 && counter != 0)
+                if (counter % SIZE == 0 && counter != 0)
+                    builder.append(System.getProperty("line.separator"))
+                            .append("| ")
+                            .append(i)
+                            .append(" |");
+                else
+                    builder.append("| ")
+                            .append(i)
+                            .append(" |");
             counter++;
         }
         return builder.toString();
     }
 
     public int[] getRows(int value) {
-        int[] rows = new int[size];
+        int[] rows = new int[SIZE];
         Coordinates coord = getCoordinates(value);
-        for (int i = 0; i < this.size; i++) {
+        for (int i = 0; i < SIZE; i++) {
             rows[i] = getValueAtPosition(coord.getX(), i);
         }
         return rows;
     }
 
     public int[] getColumns(int value) {
-        int[] cols = new int[size];
+        int[] cols = new int[SIZE];
         Coordinates coord = getCoordinates(value);
-        for (int i = 0; i < this.size; i++) {
+        for (int i = 0; i < SIZE; i++) {
             cols[i] = getValueAtPosition(i, coord.getY());
         }
         return cols;
     }
 
-//    public int getAccurateRow(int value){
+//    public void setSize(int size) {
+//        this.size = size;
+//    }
+
+    //    public int getAccurateRow(int value){
 //        return po
 //    }
 

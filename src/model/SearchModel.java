@@ -99,6 +99,7 @@ public class SearchModel extends Observable {
 
     public void search() {
         Optional<Node> node = this.search.search(this.problem, this.searchFactory.getQueueFuncton(this.searchType));
+
         node.ifPresent(n -> {
             this.nodes.clear();
             HashSet<Node> set = new HashSet<>();
@@ -108,7 +109,8 @@ public class SearchModel extends Observable {
 
             this.stats = this.searchType + " : " +
                     "\nNo Of Expansions: " + search.getMetric() + " \n" +
-                    "Time Spent in Calculating: " + search.timeSpent() + "m/s";
+                    "Time Spent in Calculating: " + search.timeSpent() + "m/s \n" +
+                    "Depth: " + n.getDepth() ;
 
 //            System.out.println(this.searchType);
 //            System.out.println(search.getMetric());
@@ -120,5 +122,28 @@ public class SearchModel extends Observable {
 
     public String getStats() {
         return stats;
+    }
+
+    public void goalState(State state) {
+        this.problem.setGoalState(state);
+        this.updateObserver();
+    }
+
+    public void setStartState(State state){
+        this.problem.setInitialState(state);
+        this.updateObserver();
+    }
+
+    public void updateObserver(){
+        this.setChanged();
+        this.notifyObservers();
+    }
+
+    public State getInitialState(){
+        return this.problem.getInitialState();
+    }
+
+    public State getGoalState(){
+        return this.problem.getGoalState();
     }
 }
