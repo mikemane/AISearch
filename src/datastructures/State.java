@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static board.EightPuzzleBoard.BOARD_SIZE;
 import static board.EightPuzzleBoard.EMPTY_POSITION;
 
 /**
@@ -17,6 +16,10 @@ public class State {
     private int[] currentState;
     public static int SIZE = 3;
 
+    /**
+     * this is the current state.
+     * @param currentState this is the current state.
+     */
     public State(int[] currentState) {
         this.currentState = new int[currentState.length];
         System.arraycopy(currentState, 0, this.currentState, 0, currentState.length);
@@ -27,6 +30,10 @@ public class State {
         return currentState;
     }
 
+    /**
+     *
+     * @param currentState
+     */
     public void setCurrentState(int[] currentState) {
         this.currentState = currentState;
     }
@@ -53,6 +60,11 @@ public class State {
         return result;
     }
 
+    /**
+     * this checks if a move is legal.
+     * @param direction this is the direction  to move to.
+     * @return this retuen if this move is legal.
+     */
     public boolean canMove(Action direction) {
         boolean result = true;
         int absPos = getPositionOf(EMPTY_POSITION);
@@ -61,30 +73,48 @@ public class State {
                 result = (getXPosition(absPos) != 0);
                 break;
             case DOWN:
-                result = (getXPosition(absPos) != SIZE - 1);
+//                result = (getXPosition(absPos) != SIZE - 1);
+                result = !(getXPosition(absPos) >= SIZE - 1);
                 break;
             case LEFT:
                 result = (getYPosition(absPos) != 0);
                 break;
             case RIGHT:
-                result = (getYPosition(absPos) != SIZE - 1);
+//                result = (getYPosition(absPos) != SIZE - 1);
+                result = !(getYPosition(absPos) >= SIZE - 1);
                 break;
         }
         return result;
     }
 
 
+    /**
+     * this gets the y position.
+     * @param position this the positon.
+     * @return
+     */
     private int getYPosition(int position) {
-        return position % BOARD_SIZE;
+        return position % SIZE;
     }
 
+    /**
+     * this gets the x position.
+     * @param position
+     * @return
+     */
     private int getXPosition(int position) {
-        return position / BOARD_SIZE;
+        return position / SIZE;
     }
 
+    /**
+     * Gets the absolute positon.
+     * @param x
+     * @param y
+     * @return
+     */
     private int getAbsolutePosition(int x, int y) {
 //        System.out.println(x + " " + y);
-        return x * SIZE + y;
+        return SIZE * x  + y;
     }
 
     /**
@@ -133,15 +163,20 @@ public class State {
     }
 
     private void updateValue(int xPosition, int yPosition, int value) {
-        this.currentState[getAbsolutePosition(xPosition, yPosition)] = value;
+        int absPosition = getAbsolutePosition(xPosition,yPosition);
+        this.currentState[absPosition] = value;
     }
 
     private Integer getValueAtPosition(int x, int y) {
         int absolutePositon = getAbsolutePosition(x, y);
+//        System.out.println(x + " " + y);
         return getCurrentState()[absolutePositon];
     }
 
 
+    /**
+     * this moves tiles right.
+     */
     public void moveGapRight() {
         int gapPos = getEmptyPositon();
         int x = getXPosition(gapPos);
@@ -200,6 +235,11 @@ public class State {
         return builder.toString();
     }
 
+    /**
+     * this gets the rows of a value
+     * @param value
+     * @return
+     */
     public int[] getRows(int value) {
         int[] rows = new int[SIZE];
         Coordinates coord = getCoordinates(value);
@@ -217,13 +257,5 @@ public class State {
         }
         return cols;
     }
-
-//    public void setSize(int size) {
-//        this.size = size;
-//    }
-
-    //    public int getAccurateRow(int value){
-//        return po
-//    }
 
 }

@@ -1,12 +1,8 @@
 package main;
 
+import datastructures.*;
 import gui.SearchType;
 import heuristicFunction.HeuristicFunction;
-import datastructures.ComparatorUtil;
-import datastructures.GoalTest;
-import datastructures.Node;
-import datastructures.Problem;
-import datastructures.State;
 import gui.GUI;
 import heuristics.Heuristics;
 import heuristics.ManhattanDistanceHeuristics;
@@ -41,23 +37,41 @@ public class Main {
 //        int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
 
 //        State.SIZE = 4;
+//        int[] puzzle = new int[]{
+//                6, 1, 10, 2,
+//                7, 11, 4, 14,
+//                5, 0, 9, 15,
+//                8, 12, 13, 3
+//        };
 //        int[] goal = new int[]{
 //                1, 2, 3, 4,
 //                5, 6, 7, 8,
 //                9, 10, 11, 12,
 //                13, 14, 15, 0
 //        };
-//        int[] puzzle = new int[]{
-//                1, 2, 3, 4,
-//                5, 6, 7, 8,
-//                9, 10, 11, 12,
-//                13, 14, 0, 15
-//        };
+//
+//        int size = 4;
+
+//        int value = puzzle[size * 3 + 3];
+//        System.out.println(value);
+//        State.SIZE = 4;
+//
+//        State state = new State(puzzle);
+////        System.out.println(state.canMove(Action.DOWN));
+//        Action action = Action.UP;
+//        boolean canMove = state.canMove(action);
+//        System.out.println(canMove);
+//        if (canMove) {
+//            State state1 = state.move(action);
+//            System.out.println(state1);
+//        }
+
 
 //        int[] goal = {1, 2, 3, 8, 0, 4, 7, 6, 5};
 //        int[] puzzle = {5, 6, 7, 4, 0, 8, 3, 2, 1};
+//        State.SIZE = 4;
 //        State puzzleState = new State(puzzle);
-//        System.out.println("Problem " + Arrays.toString(puzzle) + "\n\n");
+////        System.out.println("Problem " + Arrays.toString(puzzle) + "\n\n");
 //        GoalTest goalTest = new GoalTest(new State(goal));
 //        Problem problem = new Problem(goalTest, puzzleState, new NoCostFunction());
 
@@ -93,6 +107,6 @@ public class Main {
 //        System.out.println("Uniform Search: " + uniformSearch.getMetric() + " Number of expansions \n");
 //        System.out.println(uniformSearch.timeSpent());
 
-//        GUI gui = new GUI(new SearchModel());
+        GUI gui = new GUI(new SearchModel());
     }
 }

@@ -8,7 +8,12 @@ import datastructures.State;
  */
 public class UniformSearchHeuristics implements Heuristics {
 
-
+    /**
+     * Assigns a heuristic of 1
+     * @param state
+     * @param goalState
+     * @return
+     */
     @Override
     public double getHeuristic(State state, State goalState) {
         return 1;

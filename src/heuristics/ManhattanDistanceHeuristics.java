@@ -14,6 +14,12 @@ public class ManhattanDistanceHeuristics implements Heuristics {
         return this.getManhattenDistance(state, goalState);
     }
 
+    /**
+     * This taks the absolute difference of the current position to the goal state
+     * @param state this is the current state.
+     * @param goalState goal state.
+     * @return it should return a value.
+     */
     private double getManhattenDistance(State state, State goalState) {
         double cost = 0;
         for (int i = 0; i < goalState.getCurrentState().length; i++) {

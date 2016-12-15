@@ -16,7 +16,13 @@ import java.util.Queue;
  */
 public class SearchFactory {
 
-
+    /**
+     * This returns a search variable depending on the selected search type.
+     *
+     * @param searchType        This is the search type.
+     * @param heuristicFunction this is the heuristic fuction used to evaluate the search.
+     * @return this returns the search value.
+     */
     public Search getSearch(SearchType searchType, HeuristicFunction heuristicFunction) {
         Search search;
         switch (searchType) {
@@ -42,6 +48,12 @@ public class SearchFactory {
         return search;
     }
 
+    /**
+     * This is the search queue.
+     *
+     * @param searchType this is the search type.
+     * @return this returns the queue.
+     */
     public Queue<Node> getQueueFuncton(SearchType searchType) {
         Queue<Node> queueFunction;
         switch (searchType) {

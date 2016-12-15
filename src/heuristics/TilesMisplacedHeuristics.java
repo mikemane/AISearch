@@ -14,6 +14,12 @@ public class TilesMisplacedHeuristics implements Heuristics {
         return misplacedTiles(state, goalState);
     }
 
+    /**
+     * This returns the tiles out of place fromt he goal state and the current state.
+     * @param state
+     * @param goalState
+     * @return
+     */
     public double misplacedTiles(State state, State goalState) {
         double counter = 0;
 

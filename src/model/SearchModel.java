@@ -28,6 +28,13 @@ public class SearchModel extends Observable {
     private SearchType searchType;
     private String stats;
 
+    /**
+     * This is the search model that represents the data type for the calendar.
+     * @param search this is the type of search.
+     * @param heuristic this is the heuristic function for the search.
+     * @param currentState this is the current stage of the game.
+     * @param goalState this is the goal state of the game.
+     */
     public SearchModel(Search search, Heuristics heuristic, State currentState, State goalState) {
         this.search = search;
         this.heuristics = heuristic;
@@ -39,26 +46,24 @@ public class SearchModel extends Observable {
 
 
     public SearchModel() {
-//        int[] goal = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0};
-//        int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
-//        int[] puzzle = new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0};
-        this(new BreadFirstSearch(), new UniformSearchHeuristics(), new State(new int[]{7, 3, 4, 5, 2, 8, 6, 1, 0}), new State(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 0}));
-        ;
+        this(new BreadFirstSearch(), new UniformSearchHeuristics(), new State(new int [] {
+            6, 1, 10, 2,
+                    7, 11, 4, 14,
+                    5, 0, 9, 15,
+                    8, 12, 13, 3
+        }),new State(new int[]{
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                9, 10, 11, 12,
+                13, 14, 15, 0
+        }));
     }
-
-//    public void setSearch(Search search) {
-//        this.search = search;
-//    }
 
     public void setHeuristics(Heuristics heuristics) {
         this.heuristics = heuristics;
         this.setHeuristicFunction(new HeuristicFunction(heuristics));
         this.setSearch(this.searchType);
     }
-
-//    public void (State currentState) {
-//        this.currentState = currentState;
-//}
 
 
     public void setHeuristicFunction(HeuristicFunction heuristicFunction) {
@@ -69,6 +74,10 @@ public class SearchModel extends Observable {
         return heuristicFunction;
     }
 
+    /**
+     * This is the node to expand.
+     * @param node this is the node to add to the queue.
+     */
     public void expand(Node node) {
         if (node.getChildren().isEmpty()) return;
         HashSet<Node> nodes = new HashSet<>(node.getChildren().values());
@@ -97,6 +106,9 @@ public class SearchModel extends Observable {
         this.search = this.searchFactory.getSearch(type, new HeuristicFunction(this.heuristics));
     }
 
+    /**
+     * This is the search operator.
+     */
     public void search() {
         Optional<Node> node = this.search.search(this.problem, this.searchFactory.getQueueFuncton(this.searchType));
 
@@ -120,10 +132,18 @@ public class SearchModel extends Observable {
         });
     }
 
+    /**
+     * This returns the stats of the game.
+     * @return
+     */
     public String getStats() {
         return stats;
     }
 
+    /**
+     * This sets the goal state.
+     * @param state
+     */
     public void goalState(State state) {
         this.problem.setGoalState(state);
         this.updateObserver();

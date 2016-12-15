@@ -14,6 +14,10 @@ public class ExpandNode {
     private Problem problem;
     private int numberOfExpansions = 0;
 
+    /**
+     * This takes problem.
+     * @param problem this is the problem that needs to be solved.
+     */
     public ExpandNode(Problem problem) {
         this.problem = problem;
     }
@@ -59,6 +63,10 @@ public class ExpandNode {
         return successors;
     }
 
+    /**
+     * this is the number of expansions performed.
+     * @param numberOfExpansions
+     */
     private void setNumberOfExpansions(int numberOfExpansions) {
         this.numberOfExpansions = numberOfExpansions;
     }

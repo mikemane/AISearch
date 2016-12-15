@@ -150,8 +150,8 @@ public class GUI implements Observer {
         myPanel.add(new JLabel("Goal:"));
         myPanel.add(yField);
 
-        container.add(new JLabel(message),BorderLayout.NORTH);
-        container.add(myPanel,BorderLayout.CENTER);
+        container.add(new JLabel(message), BorderLayout.NORTH);
+        container.add(myPanel, BorderLayout.CENTER);
 
 
         int result = JOptionPane.showConfirmDialog(null, container, "Enter new States", JOptionPane.OK_CANCEL_OPTION);
@@ -177,10 +177,10 @@ public class GUI implements Observer {
 
         JPanel container = new JPanel(new GridLayout(0, 2));
 
-        JPanel initialState = new JPanel(new GridLayout(3, 3));
+        JPanel initialState = new JPanel(new GridLayout(State.SIZE, State.SIZE));
         initialState.setBorder(new LineBorder(Color.BLACK));
 
-        JPanel goalState = new JPanel(new GridLayout(3, 3));
+        JPanel goalState = new JPanel(new GridLayout(State.SIZE, State.SIZE));
 
         goalState.setBorder(new LineBorder(Color.GREEN));
 
@@ -244,7 +244,7 @@ public class GUI implements Observer {
 
     JButton createButton() {
         JButton button = new JButton();
-        button.setLayout(new GridLayout(3, 3));
+        button.setLayout(new GridLayout(State.SIZE, State.SIZE));
         button.setForeground(Color.BLACK);
         button.setBackground(Color.WHITE);
         Border line = new LineBorder(Color.BLACK);
@@ -278,7 +278,9 @@ public class GUI implements Observer {
 
 
     void search() {
-        searchModel.search();
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to do this");
+        if (confirm == JOptionPane.OK_OPTION)
+            searchModel.search();
     }
 
     @Override
@@ -334,6 +336,7 @@ public class GUI implements Observer {
             counter++;
 //            JLabel label = new JLabel(new String("i"));
         }
+        text += "<br /><br /> g(n) " + node.getgCost() + "<br /> h(n) " + node.gethCost() + "<br/>  f(n): " + node.getfCost();
         text += "</html>";
         button.setText(text);
     }
@@ -345,8 +348,6 @@ public class GUI implements Observer {
             buttonValue = "EXPAND";
         }
     }
-
-//    public void showState()
 
     public void undoAction() {
         this.searchModel.popStack();

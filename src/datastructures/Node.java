@@ -20,6 +20,12 @@ public class Node implements Comparable {
         this.fCost = 0;
     }
 
+    /**
+     * this is the node constructor that takes in an action and a state.
+     * @param parent this is the parent.
+     * @param action this is the action taken to get to this state.
+     * @param state this is the state.
+     */
     public Node(Node parent, Action action, State state) {
         this.parent = parent;
         this.state = state;
@@ -31,6 +37,13 @@ public class Node implements Comparable {
         setSolutionPath(false);
     }
 
+    /**
+     * This is the other node constructor
+     * @param parent this is the parent.
+     * @param action this is the aciton taken to get here
+     * @param cost cost taken to get here.
+     * @param state this is the state.
+     */
     public Node(Node parent, Action action, double cost, State state) {
         setParent(parent);
         setgCost(cost);
@@ -130,6 +143,10 @@ public class Node implements Comparable {
         return this.parent == null;
     }
 
+    /**
+     * this gets the path needed to perform a given move set.
+     * @return
+     */
     public List<Node> getPath() {
         List<Node> nodes = new ArrayList<>();
         Node currentNode = this;
@@ -141,6 +158,10 @@ public class Node implements Comparable {
         return nodes;
     }
 
+    /**
+     * this gets the root node form this current node.
+     * @return this returns the root node.
+     */
     public Node getRoot() {
         Node root = this;
         while ((root.parent != null))
@@ -148,6 +169,9 @@ public class Node implements Comparable {
         return root;
     }
 
+    /**
+     * this marks this root path as the solution path.
+     */
     public void setSolutionPath() {
         Node current = this;
         while (current.parent != null) {
@@ -156,6 +180,10 @@ public class Node implements Comparable {
         }
     }
 
+    /**
+     * This gets the depth of this tree.
+     * @return this gets number.
+     */
     public int getDepth() {
         Node current = this;
         int count = 0;
