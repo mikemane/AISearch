@@ -46,17 +46,20 @@ public class SearchModel extends Observable {
 
 
     public SearchModel() {
-        this(new BreadFirstSearch(), new UniformSearchHeuristics(), new State(new int [] {
-            6, 1, 10, 2,
-                    7, 11, 4, 14,
-                    5, 0, 9, 15,
-                    8, 12, 13, 3
-        }),new State(new int[]{
-                1, 2, 3, 4,
-                5, 6, 7, 8,
-                9, 10, 11, 12,
-                13, 14, 15, 0
-        }));
+        this(
+                new BreadFirstSearch(),
+                new UniformSearchHeuristics(),
+                new State(new int [] {
+                        8, 6, 7,
+                        2, 5, 4,
+                        3, 0, 1
+                }),
+                new State(new int[]{
+                        6, 4, 7,
+                        8, 5, 0,
+                        3, 2, 1
+            })
+        );
     }
 
     public void setHeuristics(Heuristics heuristics) {

@@ -60,7 +60,6 @@ public class GUI implements Observer {
 
         centerBRight.add(metricsInformation);
 
-//        centerBLeft.setBackground(Color.GREEN);
         centerBRight.setBackground(Color.LIGHT_GRAY);
 
         centerButtomPanel = new JPanel(new GridLayout(0, 2));
@@ -293,9 +292,6 @@ public class GUI implements Observer {
                 centerPanel.revalidate();
 
                 setInitialStates();
-
-                //To d
-                // o display
                 searchModel.getNodes().ifPresent(n -> n.forEach(node -> {
 
                     JButton button = createButton();
@@ -334,7 +330,6 @@ public class GUI implements Observer {
                 text += "  " + i + "  | ";
             }
             counter++;
-//            JLabel label = new JLabel(new String("i"));
         }
         text += "<br /><br /> g(n) " + node.getgCost() + "<br /> h(n) " + node.gethCost() + "<br/>  f(n): " + node.getfCost();
         text += "</html>";
